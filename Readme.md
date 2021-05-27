@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Irina Slukina](https://up.htmlacademy.ru/javascript/23/user/990505).
-* Наставник: `Неизвестно`.
+* Наставник: [Maxim Prusakov](https://htmlacademy.ru/profile/hikikomori).
 
 ---
 
