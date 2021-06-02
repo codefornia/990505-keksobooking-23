@@ -1,7 +1,10 @@
 function randomIntegerNumber(firstNumber, secondNumber) {
-  //https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-  if (firstNumber < 0 || secondNumber < 0) {
-    return 'Никаких отрицательных числел, друг! Поменяй значения!';
+  if (firstNumber > secondNumber){
+    return 'Диапазон не верен, введите корректные данные';
+  }
+
+    if (firstNumber < 0 || secondNumber < 0) {
+    return 'Никаких отрицательных чисел, друг! Поменяй значения!';
   }
 
   if (firstNumber === secondNumber) {
@@ -12,7 +15,7 @@ function randomIntegerNumber(firstNumber, secondNumber) {
   }
 
   if (Math.ceil(firstNumber) === Math.ceil(secondNumber)) {
-    return 'В этом диапазоне не найдено целых чисел. Введите коректные данные';
+    return 'В этом диапазоне не найдено целых чисел. Введите корректные данные';
   }
   let min = Math.ceil(firstNumber);
   let max = Math.floor(secondNumber);
@@ -26,25 +29,20 @@ function randomIntegerNumber(firstNumber, secondNumber) {
 randomIntegerNumber(2, 5);
 
 
-function randomFractionalNumber(firstNumber, secondNumber) {
+function randomFractionalNumber(firstNumber, secondNumber, numbers = 2) {
+  if (firstNumber > secondNumber){
+    return 'Диапазон не верен, введите корректные данные';
+  }
+
   if (firstNumber < 0 || secondNumber < 0) {
-    return 'Никаких отрицательных числел, друг! Поменяй значения!';
+    return 'Никаких отрицательных чисел, друг! Поменяй значения!';
   }
 
   if (firstNumber === secondNumber) {
-    if (Number.isInteger(firstNumber)) {
-      return firstNumber;
-    }
-    return 'Введите различные значение';
+      return firstNumber.toFixed(numbers);
   }
 
-  let min = firstNumber;
-  let max = secondNumber;
-  if (firstNumber > secondNumber) {
-    min = secondNumber;
-    max = firstNumber;
-  }
-  return Math.random() * (max - min + 1) + min;
+  return (Math.random() * (secondNumber - firstNumber + 1) + firstNumber).toFixed(numbers);
 }
 
-randomFractionalNumber(2.5, 5.758);
+randomFractionalNumber(2.65, 5.75, 3);
