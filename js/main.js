@@ -3,7 +3,7 @@ function randomIntegerNumber(firstNumber, secondNumber) {
     return 'Диапазон не верен, введите корректные данные';
   }
 
-    if (firstNumber < 0 || secondNumber < 0) {
+  if (firstNumber < 0 || secondNumber < 0) {
     return 'Никаких отрицательных чисел, друг! Поменяй значения!';
   }
 
@@ -39,10 +39,10 @@ function randomFractionalNumber(firstNumber, secondNumber, numbers = 2) {
   }
 
   if (firstNumber === secondNumber) {
-      return firstNumber.toFixed(numbers);
+    return Number(firstNumber.toFixed(numbers));
   }
 
-  return (Math.random() * (secondNumber - firstNumber + 1) + firstNumber).toFixed(numbers);
+  return Number((Math.random() * (secondNumber - firstNumber + 1) + firstNumber).toFixed(numbers));
 }
 
 randomFractionalNumber(2.65, 5.75, 3);
