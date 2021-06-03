@@ -29,7 +29,7 @@ function randomIntegerNumber(firstNumber, secondNumber) {
 randomIntegerNumber(2, 5);
 
 
-function randomFractionalNumber(firstNumber, secondNumber, numbers = 2) {
+function randomFractionalNumber(firstNumber, secondNumber, numsAfterDot = 2) {
   if (firstNumber > secondNumber){
     return 'Диапазон не верен, введите корректные данные';
   }
@@ -39,10 +39,11 @@ function randomFractionalNumber(firstNumber, secondNumber, numbers = 2) {
   }
 
   if (firstNumber === secondNumber) {
-    return Number(firstNumber.toFixed(numbers));
+    return Number(firstNumber.toFixed(numsAfterDot));
   }
 
-  return Number((Math.random() * (secondNumber - firstNumber + 1) + firstNumber).toFixed(numbers));
+  const fraction =  Math.pow(0.1, numsAfterDot);  //прибавляем, чтобы включить верхнюю границу
+  return Number(((Math.random() * (secondNumber - firstNumber)) + firstNumber + fraction).toFixed(numsAfterDot));
 }
 
-randomFractionalNumber(2.65, 5.75, 3);
+randomFractionalNumber(1.1, 1.2, 3);
