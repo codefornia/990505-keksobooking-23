@@ -28,7 +28,6 @@ function randomIntegerNumber(firstNumber, secondNumber) {
 
 randomIntegerNumber(2, 5);
 
-
 function randomFractionalNumber(firstNumber, secondNumber, numsAfterDot = 2) {
   if (firstNumber > secondNumber){
     return 'Диапазон не верен, введите корректные данные';
@@ -42,8 +41,8 @@ function randomFractionalNumber(firstNumber, secondNumber, numsAfterDot = 2) {
     return Number(firstNumber.toFixed(numsAfterDot));
   }
 
-  const fraction =  Math.pow(0.1, numsAfterDot);  //прибавляем, чтобы включить верхнюю границу
-  return Number(((Math.random() * (secondNumber - firstNumber)) + firstNumber + fraction).toFixed(numsAfterDot));
+  const powerNumber = Math.pow(10, numsAfterDot);
+  return (Number((Math.random() * (secondNumber - firstNumber) + firstNumber).toFixed(numsAfterDot))* powerNumber )/powerNumber;
 }
 
 randomFractionalNumber(1.1, 1.2, 3);
