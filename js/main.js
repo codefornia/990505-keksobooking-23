@@ -34,70 +34,99 @@ const IMAGE_NAME = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
-const getRandomNumberInt = (min, max) => {
-  const result = Math.random() * (max - min + 1) + min;
-  return Math.floor(result);
+const getRandomNumberInt = (firstNumber, secondNumber) => {
+  if (firstNumber > secondNumber) {
+    return 'Диапазон не верен, введите корректные данные';
+  }
+
+  if (firstNumber < 0 || secondNumber < 0) {
+    return 'Никаких отрицательных чисел, друг! Поменяй значения!';
+  }
+
+  if (firstNumber === secondNumber) {
+    if (Number.isInteger(firstNumber)) {
+      return firstNumber;
+    }
+    return 'Введите различные значение';
+  }
+
+  if (Math.ceil(firstNumber) === Math.ceil(secondNumber)) {
+    return 'В этом диапазоне не найдено целых чисел. Введите корректные данные';
+  }
+
+  const min = Math.ceil(firstNumber);
+  const max = Math.floor(secondNumber);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const getRandomNumberFloat = (min, max, digits) => {
-  const result = Math.random() * (max - min) + min;
-  return result.toFixed(digits);
+
+const getRandomNumberFloat = (firstNumber, secondNumber, numsAfterDot = 2) => {
+  if (firstNumber > secondNumber) {
+    return 'Диапазон не верен, введите корректные данные';
+  }
+
+  if (firstNumber < 0 || secondNumber < 0) {
+    return 'Никаких отрицательных чисел, друг! Поменяй значения!';
+  }
+
+  if (firstNumber === secondNumber) {
+    return Number(firstNumber.toFixed(numsAfterDot));
+  }
+
+  const powerNumber = Math.pow(10, numsAfterDot);
+  return (Number((Math.random() * (secondNumber - firstNumber) + firstNumber).toFixed(numsAfterDot)) * powerNumber) / powerNumber;
 };
 
-const getRandomArrayElement = (elements) => {
-  return elements[getRandomNumberInt(0, elements.length - 1)];
-};
+const getRandomArrayElement = (elements) => elements[getRandomNumberInt(0, elements.length - 1)];
 
-const getRegularizedArrayElement = (elements) => {
-  return elements.pop();
-};
+const getRegularizedArrayElement = (elements) => elements.pop();
 
 const getShuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
-    let swap = array[i];
+    const j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
+    const swap = array[i];
     array[i] = array[j];
     array[j] = swap;
   }
   return array.slice(Math.random() * (array.length - 1));
 };
 
-const createAuthor = () => {
-  return {
-    avatar: 'img/avatars/user' + getRegularizedArrayElement(AVATAR_NUMBERS) + '.png',
-  };
+const createAuthor = `avatar: img/avatars/user ${getRegularizedArrayElement(AVATAR_NUMBERS)} .png`;
+
+const createOffer = {
+  title: getRegularizedArrayElement(TITLES),
+  address: `${getRandomNumberFloat(335767, 345767, 2)}, ${getRandomNumberFloat(335767, 345767, 2)}`,
+  price: getRandomNumberInt(0, 10000),
+  type: getRandomArrayElement(TYPE_APARTMENTS),
+  rooms: getRandomNumberInt(0, 100),
+  guests: getRandomNumberInt(0, 300),
+  checkin: getRandomArrayElement(CHECKIN),
+  checkout: getRandomArrayElement(CHECKOUT),
+  features: getShuffleArray(FEATURES),
+  description: getRegularizedArrayElement(DESCRIPTIONS),
+  photos: getShuffleArray(IMAGE_NAME),
 };
 
-const createOffer = () => {
-  return {
-    title: getRegularizedArrayElement(TITLES),
-    address: getRandomNumberFloat(335767, 345767, 2) + ', ' + getRandomNumberFloat(335767, 345767, 2),
-    price: getRandomNumberInt(0, 10000),
-    type: getRandomArrayElement(TYPE_APARTMENTS),
-    rooms: getRandomNumberInt(0, 100),
-    guests: getRandomNumberInt(0, 300),
-    checkin: getRandomArrayElement(CHECKIN),
-    checkout: getRandomArrayElement(CHECKOUT),
-    features: getShuffleArray(FEATURES),
-    description: getRegularizedArrayElement(DESCRIPTIONS),
-    photos: getShuffleArray(IMAGE_NAME),
-  };
+const createLocation = {
+  lat: getRandomNumberFloat(35.65000, 35.70000, 5),
+  lng: getRandomNumberFloat(139.70000, 139.80000, 5),
 };
 
-const createLocation = () => {
-  return {
-    lat: getRandomNumberFloat(35.65000, 35.70000, 5),
-    lng: getRandomNumberFloat(139.70000, 139.80000, 5),
-  };
+const createApartment = {
+  author: createAuthor,
+  offer: createOffer,
+  location: createLocation,
+};
+/*
+const similarApartments = (count)=> (new Array(count).fill(null).map(() => createApartment));
+similarApartments(SIMILAR_APARTMENTS_COUNT);*/
+
+const getSimilarArray = (length, element) => {
+  const array = [];
+  for (let i = 0; i <= length - 1; i++) {
+    array.push(element);
+  }
+  return array;
 };
 
-const createApartment = () => {
-  return {
-    author: createAuthor(),
-    offer: createOffer(),
-    location: createLocation(),
-  };
-};
-
-const similarApartments = new Array(SIMILAR_APARTMENTS_COUNT).fill(null).map(() => createApartment());
-console.log(similarApartments);
+getSimilarArray(SIMILAR_APARTMENTS_COUNT, createApartment);

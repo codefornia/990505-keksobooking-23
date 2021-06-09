@@ -1,3 +1,4 @@
+/*
 // Функция взята из интернета и доработана
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
 
@@ -22,9 +23,10 @@ function getRandomPositiveFloat (a, b, digits = 1) {
 }
 
 
-/*function getRandomPositiveFloat (a, b, digits = 1) {
+/!*function getRandomPositiveFloat (a, b, digits = 1) {
   const result = Math.random() * (b - a) + a;
   return result.toFixed(digits);
 }
 
-getRandomPositiveFloat (10, 20, 2)*/
+getRandomPositiveFloat (10, 20, 2)*!/
+*/
