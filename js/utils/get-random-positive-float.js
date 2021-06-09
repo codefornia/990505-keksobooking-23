@@ -20,3 +20,11 @@ function getRandomPositiveFloat (a, b, digits = 1) {
   // указать требуемое количество знаков после точки
   return result.toFixed(digits);
 }
+
+
+/*function getRandomPositiveFloat (a, b, digits = 1) {
+  const result = Math.random() * (b - a) + a;
+  return result.toFixed(digits);
+}
+
+getRandomPositiveFloat (10, 20, 2)*/
