@@ -42,14 +42,6 @@ const MIN_LATITUDE = 35.65000;
 const MAX_LATITUDE = 35.70000;
 const MIN_LONGITUDE = 139.70000;
 const MAX_LONGITUDE = 139.80000;
-const getAvatarNumberArray = () => {
-  const arr = [];
-  for (let i = 1; i <= SIMILAR_APARTMENTS_COUNT; i++) {
-    arr.push(String(i).padStart(2, '0'));
-  }
-  return arr;
-};
-const avatarNumberArray = getAvatarNumberArray(SIMILAR_APARTMENTS_COUNT);
 const getRandomNumberInt = (firstNumber, secondNumber) => {
   if (firstNumber > secondNumber) {
     return 'Диапазон не верен, введите корректные данные';
@@ -100,7 +92,7 @@ const getShuffleArray = (array) => {
   }
   return array.slice(Math.random() * (array.length - 1));
 };
-const createAuthor = () => ({avatar: `img/avatars/user${avatarNumberArray.pop()}.png`});
+const createAuthor = (index) => ({avatar: `img/avatars/user${String(index).padStart(2, '0')}.png`});
 const createOffer = () => ({
   title: getRandomArrayElement(TITLES),
   address: `${getRandomNumberFloat(MIN_LATITUDE, MAX_LATITUDE, 2)}, ${getRandomNumberFloat(MIN_LONGITUDE, MAX_LONGITUDE, 2)}`,
@@ -111,7 +103,7 @@ const createOffer = () => ({
   checkin: getRandomArrayElement(CHECKIN),
   checkout: getRandomArrayElement(CHECKOUT),
   features: getShuffleArray(FEATURES),
-  description: DESCRIPTIONS.pop(),
+  description: getRandomArrayElement(DESCRIPTIONS),
   photos: getShuffleArray(IMAGE_NAME),
 });
 
@@ -120,8 +112,8 @@ const createLocation = () => ({
   lng: getRandomNumberFloat(MIN_LONGITUDE, MAX_LONGITUDE, 5),
 });
 
-const createApartment = () => ({
-  author: createAuthor(),
+const createApartment = (index) => ({
+  author: createAuthor(index),
   offer: createOffer(),
   location: createLocation(),
 });
@@ -133,9 +125,11 @@ console.log(similarApartments);
 
 const getSimilarArray = (length) => {
   const array = [];
-  for (let i = 0; i <= length - 1; i++) {
-    array.push(createApartment());
+  for (let i = 1; i <= length; i++) {
+    array.push(createApartment(i));
   }
   return array;
 };
 getSimilarArray(SIMILAR_APARTMENTS_COUNT);
+
+
