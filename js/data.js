@@ -89,4 +89,4 @@ const getSimilarArray = (length) => {
   return array;
 };
 
-export {getSimilarArray, SIMILAR_APARTMENTS_COUNT};
+export {getSimilarArray, SIMILAR_APARTMENTS_COUNT, createApartment};
