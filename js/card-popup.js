@@ -77,4 +77,4 @@ dataCard.forEach(({author, offer}) => {
   dataCardsElements.push(dataElement);
 });
 
-map.appendChild(dataCardsElements[0]);
+export {map, dataCardsElements};
