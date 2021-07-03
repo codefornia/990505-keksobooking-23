@@ -21,8 +21,8 @@ dataCard.forEach(({author, offer}) => {
   const popupTextCapacity = dataElement.querySelector('.popup__text--capacity');
   const popupTextTime = dataElement.querySelector('.popup__text--time');
   const popupFeatures = dataElement.querySelector('.popup__features');
-  const popupDescription = dataElement.querySelector('.popup__description')
-  const popupAvatar = dataElement.querySelector('.popup__avatar')
+  const popupDescription = dataElement.querySelector('.popup__description');
+  const popupAvatar = dataElement.querySelector('.popup__avatar');
   const popupPhotos = dataElement.querySelector('.popup__photos');
 
   popupTitle.textContent = offer.title;
