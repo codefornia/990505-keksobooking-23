@@ -18,6 +18,8 @@ const getDataCardsElements = (dataCards) => dataCards.map(({author, offer}) => {
   const popupTextCapacity = dataElement.querySelector('.popup__text--capacity');
   const popupTextTime = dataElement.querySelector('.popup__text--time');
   const popupFeatures = dataElement.querySelector('.popup__features');
+
+
   const popupDescription = dataElement.querySelector('.popup__description');
   const popupAvatar = dataElement.querySelector('.popup__avatar');
   const popupPhotos = dataElement.querySelector('.popup__photos');
@@ -40,7 +42,16 @@ const getDataCardsElements = (dataCards) => dataCards.map(({author, offer}) => {
   type ? popupType.textContent = TYPE_NAME[type] : popupType.remove();
   (rooms && guests) ? popupTextCapacity.textContent = `${rooms} комнаты для ${guests} гостей` : popupTextCapacity.remove();
   (checkin && checkout) ? popupTextTime.textContent = `Заезд после ${checkin}, выезд до ${checkout}` : popupTextTime.remove();
-  features ? popupFeatures.textContent : popupFeatures.remove();
+  if (features) {
+    features.forEach((feature) => {
+      const featureElement = document.createElement('li');
+      featureElement.classList.add('popup__feature');
+      featureElement.classList.add(`popup__feature--${feature}`);
+      popupFeatures.appendChild(featureElement);
+    });
+  } else {
+    popupFeatures.remove();
+  }
   description ? popupDescription.textContent = description : popupDescription.remove();
   if (photos) {
     photos.forEach((photo) => {
@@ -55,7 +66,7 @@ const getDataCardsElements = (dataCards) => dataCards.map(({author, offer}) => {
   } else {
     popupPhotos.remove();
   }
-  author.avatar ? popupAvatar.src = author.avatar: popupAvatar.remove();
+  author.avatar ? popupAvatar.src = author.avatar : popupAvatar.remove();
   return dataElement;
 });
 export {map, getDataCardsElements};
