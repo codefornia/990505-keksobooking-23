@@ -1,18 +1,15 @@
-import {getSimilarArray, SIMILAR_APARTMENTS_COUNT} from './data.js';
-
 const cardPopupTemplate = document.querySelector('#card').content.querySelector('.popup');
 const map = document.querySelector('.map__canvas');
-cardPopupTemplate.classList.remove('hidden');
 const TYPE_NAME = {
-  'flat': 'Квартира',
-  'bungalow': 'Бунгало',
-  'house': 'Дом',
-  'palace': 'Дворец',
-  'hotel': 'Отель',
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
 };
-const dataCard = getSimilarArray(SIMILAR_APARTMENTS_COUNT);
-const dataCardsElements = [];
-dataCard.forEach(({author, offer}) => {
+const IMG_WIDTH = 45;
+const IMG_HEIGHT = 40;
+const getDataCardsElements = (dataCards) => dataCards.map(({author, offer}) => {
   const dataElement = cardPopupTemplate.cloneNode(true);
   const popupTitle = dataElement.querySelector('.popup__title');
   const popupTextAddress = dataElement.querySelector('.popup__text--address');
@@ -24,57 +21,41 @@ dataCard.forEach(({author, offer}) => {
   const popupDescription = dataElement.querySelector('.popup__description');
   const popupAvatar = dataElement.querySelector('.popup__avatar');
   const popupPhotos = dataElement.querySelector('.popup__photos');
-
-  popupTitle.textContent = offer.title;
-  popupTextAddress.textContent = offer.address;
-  popupTextPrice.textContent = `${offer.price} ₽/ночь`;
-  popupType.textContent = TYPE_NAME[offer.type];
-  popupTextCapacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
-  popupTextTime.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
-  popupFeatures.textContent = offer.features;
-  popupDescription.textContent = offer.description;
-  offer.photos.forEach((photo) => {
-    const photoElement = document.createElement('img');
-    photoElement.src = photo;
-    photoElement.width = 45;
-    photoElement.height = 40;
-    photoElement.classList.add('popup__photo');
-    photoElement.alt = 'Фотография жилья';
-    popupPhotos.appendChild(photoElement);
-  });
-  popupAvatar.src = author.title;
-
-  if (!offer.title) {
-    popupTitle.remove();
-  }
-  if (!offer.address) {
-    popupTextAddress.remove();
-  }
-  if (!offer.price) {
-    popupTextPrice.remove();
-  }
-  if (!offer.type) {
-    popupType.remove();
-  }
-  if (!offer.rooms && !offer.guests) {
-    popupTextCapacity.remove();
-  }
-  if (!offer.checkin && !offer.checkout) {
-    popupTextTime.remove();
-  }
-  if (!offer.features) {
-    popupFeatures.remove();
-  }
-  if (!offer.description) {
-    popupDescription.remove();
-  }
-  if (!author.title) {
-    popupAvatar.remove();
-  }
-  if (!offer.photos.length) {
+  const {
+    address,
+    checkin,
+    checkout,
+    description,
+    features,
+    guests,
+    photos,
+    price,
+    rooms,
+    title,
+    type,
+  } = offer;
+  title ? popupTitle.textContent = title : popupTitle.remove();
+  address ? popupTextAddress.textContent = address : popupTextAddress.remove();
+  price ? popupTextPrice.textContent = `${price} ₽/ночь` : popupTextPrice.remove();
+  type ? popupType.textContent = TYPE_NAME[type] : popupType.remove();
+  (rooms && guests) ? popupTextCapacity.textContent = `${rooms} комнаты для ${guests} гостей` : popupTextCapacity.remove();
+  (checkin && checkout) ? popupTextTime.textContent = `Заезд после ${checkin}, выезд до ${checkout}` : popupTextTime.remove();
+  features ? popupFeatures.textContent : popupFeatures.remove();
+  description ? popupDescription.textContent = description : popupDescription.remove();
+  if (photos) {
+    photos.forEach((photo) => {
+      const photoElement = document.createElement('img');
+      photoElement.src = photo;
+      photoElement.width = IMG_WIDTH;
+      photoElement.height = IMG_HEIGHT;
+      photoElement.classList.add('popup__photo');
+      photoElement.alt = 'Фотография жилья';
+      popupPhotos.appendChild(photoElement);
+    });
+  } else {
     popupPhotos.remove();
   }
-  dataCardsElements.push(dataElement);
+  author.avatar ? popupAvatar.src = author.avatar: popupAvatar.remove();
+  return dataElement;
 });
-
-export {map, dataCardsElements};
+export {map, getDataCardsElements};
