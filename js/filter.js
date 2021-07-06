@@ -6,10 +6,10 @@ const disableFilter = () => {
     filterItem.setAttribute('disabled', 'disabled');
   });
 };
-const activeFilter = () => {
+const enableFilter = () => {
   mapFilter.classList.remove('map__filters--disabled');
   filterItems.forEach((filterItem) => {
     filterItem.removeAttribute('disabled');
   });
 };
-export {disableFilter, activeFilter};
+export {disableFilter, enableFilter};

@@ -6,10 +6,10 @@ const disableAdForm = () => {
     fieldsetBlock.setAttribute('disabled', 'disabled');
   });
 };
-const activeAdForm = () => {
+const enableAdForm = () => {
   adForm.classList.remove('ad-form--disabled');
   fieldsetBlocks.forEach((fieldsetBlock) => {
     fieldsetBlock.removeAttribute('disabled');
   });
 };
-export {disableAdForm, activeAdForm};
+export {disableAdForm, enableAdForm};
