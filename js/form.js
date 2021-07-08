@@ -70,7 +70,7 @@ const checkCapacity = () => {
     capacity.setCustomValidity('не Сойдёт');
   }
   capacity.reportValidity();
-}
+};
 
 capacity.addEventListener('input', () => {
   checkCapacity();
