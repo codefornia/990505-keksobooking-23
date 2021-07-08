@@ -63,11 +63,27 @@ offerPrice.addEventListener('input', () => {
   offerPrice.reportValidity();
 });
 
-capacity.addEventListener('input', () => {
-  if ((NUMBER_OF_GUESTS[roomNumber.value]).includes(capacity.value)){
-    capacity.setCustomValidity('Сойдёт');
+const checkCapacity = () => {
+  if ((NUMBER_OF_GUESTS[roomNumber.value]).includes(Number(capacity.value))){
+    capacity.setCustomValidity('');
+  } else {
+    capacity.setCustomValidity('не Сойдёт');
   }
   capacity.reportValidity();
+}
+
+capacity.addEventListener('input', () => {
+  checkCapacity();
+});
+
+roomNumber.addEventListener('input', () => {
+  checkCapacity();
+});
+
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
+timeIn.addEventListener('input', () => {
+  timeOut.value = timeIn.value;
 });
 
 export {disableAdForm, enableAdForm};
