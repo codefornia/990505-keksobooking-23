@@ -64,12 +64,17 @@ offerPrice.addEventListener('input', (evt) => {
 });
 
 const checkCapacity = () => {
-  if ((NUMBER_OF_GUESTS[roomNumber.value]).includes(Number(capacity.value))){
+  let isValid;
+
+  if ((NUMBER_OF_GUESTS[roomNumber.value]).includes(Number(capacity.value))) {
     capacity.setCustomValidity('');
+    isValid = true;
   } else {
     capacity.setCustomValidity('Количество гостей не должно превышать количество комнат');
+    isValid = false;
   }
   capacity.reportValidity();
+  return isValid;
 };
 
 capacity.addEventListener('input', (evt) => {
@@ -82,14 +87,11 @@ roomNumber.addEventListener('input', (evt) => {
   evt.target.reportValidity();
 });
 
-adForm.addEventListener('submit',(evt)=> {
+adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  if ((NUMBER_OF_GUESTS[roomNumber.value]).includes(Number(capacity.value))) {
-    capacity.setCustomValidity('');
+  if (checkCapacity()) {
     evt.target.submit();
-  } else {
-    capacity.setCustomValidity('Количество гостей не должно превышать количество комнат');
   }
-  capacity.reportValidity();
 });
+
 export {disableAdForm, enableAdForm};
