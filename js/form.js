@@ -21,8 +21,6 @@ const offerPrice = adForm.querySelector('#price');
 const offerType = adForm.querySelector('#type');
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
-const timeIn = adForm.querySelector('#timein');
-const timeOut = adForm.querySelector('#timeout');
 
 const disableAdForm = () => {
   adForm.classList.add('ad-form--disabled');
@@ -52,7 +50,7 @@ offerTitle.addEventListener('input', (evt) => {
 
 offerPrice.addEventListener('input', (evt) => {
   const type = offerType.value;
-  offerPrice.setAttribute('min', MIN_PRICE[type]);
+  evt.target.setAttribute('min', MIN_PRICE[type]);
   if (!offerPrice.value) {
     evt.target.setCustomValidity('Цена не указана');
   } else if (evt.target.value < MIN_PRICE[type]) {
@@ -65,13 +63,13 @@ offerPrice.addEventListener('input', (evt) => {
   evt.target.reportValidity();
 });
 
-const checkCapacity = (evt) => {
+const checkCapacity = () => {
   if ((NUMBER_OF_GUESTS[roomNumber.value]).includes(Number(capacity.value))){
-    evt.target.setCustomValidity('');
+    capacity.setCustomValidity('');
   } else {
-    evt.target.setCustomValidity('Количество гостей не должно превышать количество комнат');
+    capacity.setCustomValidity('Количество гостей не должно превышать количество комнат');
   }
-  evt.target.reportValidity();
+  capacity.reportValidity();
 };
 
 capacity.addEventListener('input', (evt) => {
@@ -81,16 +79,6 @@ capacity.addEventListener('input', (evt) => {
 
 roomNumber.addEventListener('input', (evt) => {
   checkCapacity();
-  evt.target.reportValidity();
-});
-
-timeIn.addEventListener('input', (evt) => {
-  timeOut.value = evt.target.value;
-  evt.target.reportValidity();
-});
-
-timeOut.addEventListener('input', (evt) => {
-  timeIn.value = evt.target.value;
   evt.target.reportValidity();
 });
 
