@@ -82,4 +82,14 @@ roomNumber.addEventListener('input', (evt) => {
   evt.target.reportValidity();
 });
 
+adForm.addEventListener('submit',(evt)=> {
+  evt.preventDefault();
+  if ((NUMBER_OF_GUESTS[roomNumber.value]).includes(Number(capacity.value))) {
+    capacity.setCustomValidity('');
+    evt.target.submit();
+  } else {
+    capacity.setCustomValidity('Количество гостей не должно превышать количество комнат');
+  }
+  capacity.reportValidity();
+});
 export {disableAdForm, enableAdForm};
