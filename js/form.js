@@ -21,6 +21,8 @@ const offerPrice = adForm.querySelector('#price');
 const offerType = adForm.querySelector('#type');
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
 
 const disableAdForm = () => {
   adForm.classList.add('ad-form--disabled');
@@ -85,6 +87,14 @@ capacity.addEventListener('input', (evt) => {
 roomNumber.addEventListener('input', (evt) => {
   checkCapacity();
   evt.target.reportValidity();
+});
+
+timeIn.addEventListener('input', (evt) => {
+  timeOut.value = evt.target.value;
+});
+
+timeOut.addEventListener('input', (evt) => {
+  timeIn.value = evt.target.value;
 });
 
 adForm.addEventListener('submit', (evt) => {
