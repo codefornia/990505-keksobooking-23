@@ -50,7 +50,7 @@ offerTitle.addEventListener('input', (evt) => {
   evt.target.reportValidity();
 });
 
-offerType.addEventListener('input', (evt)=>{
+offerType.addEventListener('input', ()=>{
   offerPrice.setAttribute('min', MIN_PRICE[offerType.value]);
   offerPrice.placeholder = MIN_PRICE[offerType.value];
 });
