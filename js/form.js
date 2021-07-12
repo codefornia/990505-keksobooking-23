@@ -21,6 +21,8 @@ const offerPrice = adForm.querySelector('#price');
 const offerType = adForm.querySelector('#type');
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
 
 const disableAdForm = () => {
   adForm.classList.add('ad-form--disabled');
@@ -48,9 +50,13 @@ offerTitle.addEventListener('input', (evt) => {
   evt.target.reportValidity();
 });
 
+offerType.addEventListener('input', () => {
+  offerPrice.setAttribute('min', MIN_PRICE[offerType.value]);
+  offerPrice.placeholder = MIN_PRICE[offerType.value];
+});
+
 offerPrice.addEventListener('input', (evt) => {
   const type = offerType.value;
-  evt.target.setAttribute('min', MIN_PRICE[type]);
   if (!offerPrice.value) {
     evt.target.setCustomValidity('Цена не указана');
   } else if (evt.target.value < MIN_PRICE[type]) {
@@ -85,6 +91,14 @@ capacity.addEventListener('input', (evt) => {
 roomNumber.addEventListener('input', (evt) => {
   checkCapacity();
   evt.target.reportValidity();
+});
+
+timeIn.addEventListener('input', (evt) => {
+  timeOut.value = evt.target.value;
+});
+
+timeOut.addEventListener('input', (evt) => {
+  timeIn.value = evt.target.value;
 });
 
 adForm.addEventListener('submit', (evt) => {
