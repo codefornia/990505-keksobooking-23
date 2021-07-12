@@ -50,9 +50,13 @@ offerTitle.addEventListener('input', (evt) => {
   evt.target.reportValidity();
 });
 
+offerType.addEventListener('input', (evt)=>{
+  evt.target.setAttribute('min', MIN_PRICE[offerType.value]);
+  offerPrice.placeholder = MIN_PRICE[offerType.value];
+});
+
 offerPrice.addEventListener('input', (evt) => {
   const type = offerType.value;
-  evt.target.setAttribute('min', MIN_PRICE[type]);
   if (!offerPrice.value) {
     evt.target.setCustomValidity('Цена не указана');
   } else if (evt.target.value < MIN_PRICE[type]) {
