@@ -51,7 +51,7 @@ offerTitle.addEventListener('input', (evt) => {
 });
 
 offerType.addEventListener('input', (evt)=>{
-  evt.target.setAttribute('min', MIN_PRICE[offerType.value]);
+  offerPrice.setAttribute('min', MIN_PRICE[offerType.value]);
   offerPrice.placeholder = MIN_PRICE[offerType.value];
 });
 
