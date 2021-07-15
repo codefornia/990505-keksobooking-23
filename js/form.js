@@ -8,6 +8,10 @@ const MIN_PRICE = {
   house: 5000,
   palace: 10000,
 };
+const DEFAULT_LOCATION = {
+  lat: 35.6700,
+  lng: 139.7500,
+};
 const NUMBER_OF_GUESTS = {
   1: [1],
   2: [1, 2],
@@ -23,6 +27,7 @@ const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
+const formAddress = adForm.querySelector('#address');
 
 const disableAdForm = () => {
   adForm.classList.add('ad-form--disabled');
@@ -108,4 +113,5 @@ adForm.addEventListener('submit', (evt) => {
   }
 });
 
+formAddress.placeholder = `${DEFAULT_LOCATION.lat.toFixed(5)}, ${DEFAULT_LOCATION.lng.toFixed(5)}`;
 export {disableAdForm, enableAdForm};
