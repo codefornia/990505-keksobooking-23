@@ -88,5 +88,5 @@ const getSimilarArray = (length) => {
   }
   return array;
 };
-
-export {getSimilarArray, SIMILAR_APARTMENTS_COUNT};
+const dataCards = getSimilarArray(SIMILAR_APARTMENTS_COUNT)
+export {dataCards};

@@ -1,5 +1,7 @@
 import {disableFilter, enableFilter} from './filter.js';
 import {disableAdForm, enableAdForm} from './form.js';
+import {dataCards} from './data.js';
+import {getDataCardsElements} from './card-popup.js';
 
 const DEFAULT_LOCATION = {
   lat: 35.6700,
@@ -59,16 +61,75 @@ const mainPinMarker = L.marker(
 );
 
 mainPinMarker.addTo(mapCanvas);
-
+//функция заполнения
 mainPinMarker.on('moveend', (evt) => {
-  let latLng;
-  if (evt) {
-    latLng = evt.target.getLatLng();
-  } else {
-    latLng = DEFAULT_LOCATION;
-  }
-  const lat = latLng.lat.toFixed(5);
-  const lng = latLng.lng.toFixed(5);
-  formAddress.value = `${lat}, ${lng}`;
+  const latLng = evt.target.getLatLng();
+  formAddress.value = `${latLng.lat.toFixed(5)}, ${latLng.lng.toFixed(5)}`;
 });
+
+
+//маркер
+
+const points = [
+  {
+    title: 'Футура',
+    lat: 59.96925,
+    lng: 30.31730,
+  },
+  {
+    title: 'Шаверма',
+    lat: 59.96783,
+    lng: 30.31258,
+  },
+  {
+    title: 'Франк',
+    lat: 59.95958,
+    lng: 30.30228,
+  },
+  {
+    title: 'Ginza',
+    lat: 59.97292,
+    lng: 30.31982,
+  },
+];
+//
+const dataCardsElements = getDataCardsElements(dataCards);
+const markerGroup = L.layerGroup().addTo(mapCanvas);
+//делаем пины
+const createPin = (point, index) => {
+  const {lat, lng} = point.location;
+  const pinIcon = L.icon({
+    iconUrl: PIN.icon,
+    iconSize: PIN.size,
+    iconAnchor: PIN.anchor,
+  });
+  const pinMarker = L.marker(
+    {
+      lat,
+      lng,
+    },
+    {
+      pinIcon,
+    },
+  );
+  pinMarker
+    .addTo(markerGroup)
+    .bindPopup(
+      dataCardsElements[index],
+      {
+        keepInView: true,
+      },
+    );
+};
+
+const generatePins = (data) => {
+  data.forEach((element,index) => {
+    createPin(element,index);
+  });
+};
+
+generatePins(dataCards);
+
+
+
 
