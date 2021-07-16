@@ -7,20 +7,17 @@ const DEFAULT_LOCATION = {
   lat: 35.6700,
   lng: 139.7500,
 };
-
-const MAP_ZOOM = 10;
-const MAIN_PIN = {
-  size: [52, 52],
-  anchor: [26, 52],
-  icon: './img/main-pin.svg',
+const MAP_ZOOM = 13;
+const MainPin = {
+  SIZE: [52, 52],
+  ANCHOR: [26, 52],
+  ICON: './img/main-pin.svg',
 };
-
-const PIN = {
-  size: [40, 40],
-  anchor: [20, 40],
-  icon: './img/pin.svg',
+const Pin = {
+  SIZE: [40, 40],
+  ANCHOR: [20, 40],
+  ICON: './img/pin.svg',
 };
-
 const formAddress = document.querySelector('#address');
 
 disableFilter();
@@ -44,9 +41,9 @@ L.tileLayer(
 ).addTo(mapCanvas);
 
 const mainPinIcon = L.icon({
-  iconUrl: MAIN_PIN.icon,
-  iconSize: MAIN_PIN.size,
-  iconAnchor: MAIN_PIN.anchor,
+  iconUrl: MainPin.ICON,
+  iconSize: MainPin.SIZE,
+  iconAnchor: MainPin.ANCHOR,
 });
 
 const mainPinMarker = L.marker(
@@ -73,9 +70,9 @@ const markerGroup = L.layerGroup().addTo(mapCanvas);
 const createPin = (point, index) => {
   const {lat, lng} = point.location;
   const pinIcon = L.icon({
-    iconUrl: PIN.icon,
-    iconSize: PIN.size,
-    iconAnchor: PIN.anchor,
+    iconUrl: Pin.ICON,
+    iconSize: Pin.SIZE,
+    iconAnchor: Pin.ANCHOR,
   });
   const pinMarker = L.marker(
     {
