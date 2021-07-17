@@ -24,7 +24,7 @@ disableFilter();
 disableAdForm();
 
 const mapCanvas = L.map('map-canvas')
-  .on('load', () => {
+  .addEventListener('load', () => {
     enableAdForm();
     enableFilter();
   })
@@ -59,7 +59,7 @@ const mainPinMarker = L.marker(
 
 mainPinMarker.addTo(mapCanvas);
 
-mainPinMarker.on('moveend', (evt) => {
+mainPinMarker.addEventListener('moveend', (evt) => {
   const latLng = evt.target.getLatLng();
   formAddress.value = `${latLng.lat.toFixed(5)}, ${latLng.lng.toFixed(5)}`;
 });
@@ -99,4 +99,4 @@ const generatePins = (data) => {
   });
 };
 
-generatePins(dataCards);
+export {generatePins};
