@@ -1,11 +1,6 @@
-import {map, getDataCardsElements} from './card-popup.js';
-import {getSimilarArray, SIMILAR_APARTMENTS_COUNT} from './data.js';
-import {disableFilter, enableFilter} from './filter.js';
-import {disableAdForm, enableAdForm} from './form.js';
-const dataCards = getSimilarArray(SIMILAR_APARTMENTS_COUNT);
-const dataCardsElements = getDataCardsElements(dataCards);
-map.appendChild(dataCardsElements[0]);
-disableFilter();
-disableAdForm();
-enableFilter();
-enableAdForm();
+import './card-popup.js';
+import './filter.js';
+import './form.js';
+import {generatePins} from './map.js';
+import {dataCards} from './data.js';
+generatePins(dataCards);
