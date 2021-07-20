@@ -1,3 +1,5 @@
+import {uploadData} from './api.js';
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE = 1000000;
@@ -114,4 +116,13 @@ adForm.addEventListener('submit', (evt) => {
 });
 
 formAddress.placeholder = `${DEFAULT_LOCATION.lat.toFixed(5)}, ${DEFAULT_LOCATION.lng.toFixed(5)}`;
+
+//отправка
+
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const formData = new FormData(evt.target);
+  uploadData(formData);
+});
+
 export {disableAdForm, enableAdForm};

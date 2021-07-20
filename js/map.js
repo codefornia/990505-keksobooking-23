@@ -1,8 +1,9 @@
 import {disableFilter, enableFilter} from './filter.js';
 import {disableAdForm, enableAdForm} from './form.js';
-import {dataCards} from './data.js';
 import {getDataCardsElements} from './card-popup.js';
+import {loadData} from './api.js';
 
+const SIMILAR_APARTMENTS_COUNT = 10;
 const DEFAULT_LOCATION = {
   lat: 35.6700,
   lng: 139.7500,
@@ -27,6 +28,9 @@ const mapCanvas = L.map('map-canvas')
   .addEventListener('load', () => {
     enableAdForm();
     enableFilter();
+    loadData((serverData) => {
+      generatePins(serverData.slice(0, SIMILAR_APARTMENTS_COUNT));
+    });
   })
   .setView({
     lat: DEFAULT_LOCATION.lat,
@@ -64,10 +68,10 @@ mainPinMarker.addEventListener('moveend', (evt) => {
   formAddress.value = `${latLng.lat.toFixed(5)}, ${latLng.lng.toFixed(5)}`;
 });
 
-const dataCardsElements = getDataCardsElements(dataCards);
+
 const markerGroup = L.layerGroup().addTo(mapCanvas);
 
-const createPin = (point, index) => {
+const createPin = (point, index, data) => {
   const {lat, lng} = point.location;
   const pinIcon = L.icon({
     iconUrl: Pin.ICON,
@@ -86,7 +90,7 @@ const createPin = (point, index) => {
   pinMarker
     .addTo(markerGroup)
     .bindPopup(
-      dataCardsElements[index],
+      data[index],
       {
         keepInView: true,
       },
@@ -94,9 +98,8 @@ const createPin = (point, index) => {
 };
 
 const generatePins = (data) => {
+  const dataCardsElements = getDataCardsElements(data);
   data.forEach((element,index) => {
-    createPin(element,index);
+    createPin(element,index, dataCardsElements);
   });
 };
-
-export {generatePins};
