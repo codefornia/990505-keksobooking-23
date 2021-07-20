@@ -111,7 +111,8 @@ timeOut.addEventListener('input', (evt) => {
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (checkCapacity()) {
-    evt.target.submit();
+    const formData = new FormData(evt.target);
+    uploadData(formData);
   }
 });
 
@@ -119,10 +120,5 @@ formAddress.placeholder = `${DEFAULT_LOCATION.lat.toFixed(5)}, ${DEFAULT_LOCATIO
 
 //отправка
 
-adForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const formData = new FormData(evt.target);
-  uploadData(formData);
-});
 
 export {disableAdForm, enableAdForm};
