@@ -1,5 +1,4 @@
 import {uploadData} from './api.js';
-import {resetMap} from './map.js';
 
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
@@ -110,6 +109,13 @@ timeOut.addEventListener('input', (evt) => {
   timeIn.value = evt.target.value;
 });
 
+
+formAddress.placeholder = `${DEFAULT_LOCATION.lat.toFixed(5)}, ${DEFAULT_LOCATION.lng.toFixed(5)}`;
+
+const resetForm = () => {
+  adForm.reset();
+};
+
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (checkCapacity()) {
@@ -118,16 +124,4 @@ adForm.addEventListener('submit', (evt) => {
   }
 });
 
-formAddress.placeholder = `${DEFAULT_LOCATION.lat.toFixed(5)}, ${DEFAULT_LOCATION.lng.toFixed(5)}`;
-
-//сброс
-const resetForm = () => {
-  adForm.reset();
-  resetMap();
-};
-//сброс по кнопке
-resetButton.addEventListener('click', () => {
-  resetForm();
-});
-
-export {disableAdForm, enableAdForm};
+export {disableAdForm, enableAdForm, resetForm, resetButton};

@@ -1,4 +1,4 @@
-import {showAlert} from './utils.js';
+import {showErrorPopup, showSuccessPopup, showAlert} from './popup.js';
 
 const URL_TO_GET = 'https://23.javascript.pages.academy/keksobooking/data';
 const URL_TO_SEND = 'https://23.javascript.pages.academy/keksobooking';
@@ -7,19 +7,23 @@ const loadData = (cb) => {
   fetch(URL_TO_GET)
     .then((response) => response.json())
     .then(cb)
-    .catch(() => showAlert('Что-то пошло не так.'));
+    .catch(() => showAlert('Загрузка данных на карте сломана, но вы можете отправить форму! Спасибо за понимание!'));
 };
 
 const uploadData = (body) => {
   fetch(URL_TO_SEND,
     {
       method: 'POST',
-      body: body,
+      body,
     })
-    .then(() => {
-      showAlert('Данные успешно загружены на сервер.');
+    .then((response) => {
+      if (response.ok) {
+        showSuccessPopup();
+      } else {
+        throw new Error();
+      }
     })
-    .catch(() => showAlert('Что-то пошло не так.'));
+    .catch(showErrorPopup);
 };
 
 export {loadData, uploadData};

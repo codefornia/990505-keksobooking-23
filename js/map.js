@@ -1,9 +1,5 @@
-import {disableFilter, enableFilter} from './filter.js';
-import {disableAdForm, enableAdForm} from './form.js';
-import {getDataCardsElements} from './card-popup.js';
-import {loadData} from './api.js';
+import {getDataCardsElements} from './card.js';
 
-const SIMILAR_APARTMENTS_COUNT = 10;
 const DEFAULT_LOCATION = {
   lat: 35.6700,
   lng: 139.7500,
@@ -21,21 +17,7 @@ const Pin = {
 };
 const formAddress = document.querySelector('#address');
 
-disableFilter();
-disableAdForm();
-
-const mapCanvas = L.map('map-canvas')
-  .addEventListener('load', () => {
-    enableAdForm();
-    enableFilter();
-    loadData((serverData) => {
-      generatePins(serverData.slice(0, SIMILAR_APARTMENTS_COUNT));
-    });
-  })
-  .setView({
-    lat: DEFAULT_LOCATION.lat,
-    lng: DEFAULT_LOCATION.lng,
-  }, MAP_ZOOM);
+const mapCanvas = L.map('map-canvas');
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -104,12 +86,13 @@ const generatePins = (data) => {
   });
 };
 
+
 const resetMap = () => {
-  MainPin.setLatLng(DEFAULT_LOCATION);
+  mainPinMarker.setLatLng(DEFAULT_LOCATION);
   mapCanvas.setView({
     lat: DEFAULT_LOCATION.lat,
     lng: DEFAULT_LOCATION.lng,
   }, MAP_ZOOM);
 };
 
-export {resetMap};
+export {resetMap, generatePins, mapCanvas, MAP_ZOOM, DEFAULT_LOCATION};

@@ -1,5 +1,6 @@
 const mapFilter = document.querySelector('.map__filters');
 const filterItems = mapFilter.querySelectorAll('select');
+
 const disableFilter = () => {
   mapFilter.classList.add('map__filters--disabled');
   filterItems.forEach((filterItem) => {

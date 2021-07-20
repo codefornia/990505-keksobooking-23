@@ -40,25 +40,6 @@ const getRandomNumberInt = (firstNumber, secondNumber) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const showAlert = (message) => {
-  const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 1000;
-  alertContainer.style.position = 'fixed';
-  alertContainer.style.width = '300px';
-  alertContainer.style.height = 'min-content';
-  alertContainer.style.top = 0;
-  alertContainer.style.left = 0;
-  alertContainer.style.right = 0;
-  alertContainer.style.bottom = 0;
-  alertContainer.style.margin = 'auto';
-  alertContainer.style.padding = '50px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'white';
-  alertContainer.style.border = '5px solid #ff6d51';
-  alertContainer.style.borderRadius = '8px';
-  alertContainer.textContent = message;
-  document.body.append(alertContainer);
-};
-/*const getRandomArrayElement = (arr) => arr[getRandomNumberInt(0, arr.length - 1)];*/
-export {getRandomNumberFloat, getRandomNumberInt, showAlert};
+
+
+export {getRandomNumberFloat, getRandomNumberInt};
