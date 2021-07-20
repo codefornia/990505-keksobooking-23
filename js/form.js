@@ -1,3 +1,5 @@
+import {uploadData} from './api.js';
+
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE = 1000000;
@@ -19,6 +21,7 @@ const NUMBER_OF_GUESTS = {
   100: [0],
 };
 const adForm = document.querySelector('.ad-form');
+const resetButton = adForm.querySelector('.ad-form__reset');
 const fieldsetBlocks = adForm.querySelectorAll('fieldset');
 const offerTitle = adForm.querySelector('#title');
 const offerPrice = adForm.querySelector('#price');
@@ -106,12 +109,19 @@ timeOut.addEventListener('input', (evt) => {
   timeIn.value = evt.target.value;
 });
 
+
+formAddress.placeholder = `${DEFAULT_LOCATION.lat.toFixed(5)}, ${DEFAULT_LOCATION.lng.toFixed(5)}`;
+
+const resetForm = () => {
+  adForm.reset();
+};
+
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (checkCapacity()) {
-    evt.target.submit();
+    const formData = new FormData(evt.target);
+    uploadData(formData);
   }
 });
 
-formAddress.placeholder = `${DEFAULT_LOCATION.lat.toFixed(5)}, ${DEFAULT_LOCATION.lng.toFixed(5)}`;
-export {disableAdForm, enableAdForm};
+export {disableAdForm, enableAdForm, resetForm, resetButton};

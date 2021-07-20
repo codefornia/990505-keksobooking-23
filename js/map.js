@@ -1,7 +1,4 @@
-import {disableFilter, enableFilter} from './filter.js';
-import {disableAdForm, enableAdForm} from './form.js';
-import {dataCards} from './data.js';
-import {getDataCardsElements} from './card-popup.js';
+import {getDataCardsElements} from './card.js';
 
 const DEFAULT_LOCATION = {
   lat: 35.6700,
@@ -20,18 +17,7 @@ const Pin = {
 };
 const formAddress = document.querySelector('#address');
 
-disableFilter();
-disableAdForm();
-
-const mapCanvas = L.map('map-canvas')
-  .addEventListener('load', () => {
-    enableAdForm();
-    enableFilter();
-  })
-  .setView({
-    lat: DEFAULT_LOCATION.lat,
-    lng: DEFAULT_LOCATION.lng,
-  }, MAP_ZOOM);
+const mapCanvas = L.map('map-canvas');
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -64,10 +50,10 @@ mainPinMarker.addEventListener('moveend', (evt) => {
   formAddress.value = `${latLng.lat.toFixed(5)}, ${latLng.lng.toFixed(5)}`;
 });
 
-const dataCardsElements = getDataCardsElements(dataCards);
+
 const markerGroup = L.layerGroup().addTo(mapCanvas);
 
-const createPin = (point, index) => {
+const createPin = (point, index, data) => {
   const {lat, lng} = point.location;
   const pinIcon = L.icon({
     iconUrl: Pin.ICON,
@@ -86,7 +72,7 @@ const createPin = (point, index) => {
   pinMarker
     .addTo(markerGroup)
     .bindPopup(
-      dataCardsElements[index],
+      data[index],
       {
         keepInView: true,
       },
@@ -94,9 +80,19 @@ const createPin = (point, index) => {
 };
 
 const generatePins = (data) => {
-  data.forEach((element,index) => {
-    createPin(element,index);
+  const dataCardsElements = getDataCardsElements(data);
+  data.forEach((element, index) => {
+    createPin(element, index, dataCardsElements);
   });
 };
 
-export {generatePins};
+
+const resetMap = () => {
+  mainPinMarker.setLatLng(DEFAULT_LOCATION);
+  mapCanvas.setView({
+    lat: DEFAULT_LOCATION.lat,
+    lng: DEFAULT_LOCATION.lng,
+  }, MAP_ZOOM);
+};
+
+export {resetMap, generatePins, mapCanvas, MAP_ZOOM, DEFAULT_LOCATION};
