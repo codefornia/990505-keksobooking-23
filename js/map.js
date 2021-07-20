@@ -99,7 +99,17 @@ const createPin = (point, index, data) => {
 
 const generatePins = (data) => {
   const dataCardsElements = getDataCardsElements(data);
-  data.forEach((element,index) => {
-    createPin(element,index, dataCardsElements);
+  data.forEach((element, index) => {
+    createPin(element, index, dataCardsElements);
   });
 };
+
+const resetMap = () => {
+  MainPin.setLatLng(DEFAULT_LOCATION);
+  mapCanvas.setView({
+    lat: DEFAULT_LOCATION.lat,
+    lng: DEFAULT_LOCATION.lng,
+  }, MAP_ZOOM);
+};
+
+export {resetMap};

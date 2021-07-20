@@ -43,18 +43,20 @@ const getRandomNumberInt = (firstNumber, secondNumber) => {
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 1000;
-  alertContainer.style.position = 'absolute';
+  alertContainer.style.position = 'fixed';
   alertContainer.style.width = '300px';
-  alertContainer.style.height = '300px';
+  alertContainer.style.height = 'min-content';
   alertContainer.style.top = 0;
   alertContainer.style.left = 0;
   alertContainer.style.right = 0;
+  alertContainer.style.bottom = 0;
+  alertContainer.style.margin = 'auto';
   alertContainer.style.padding = '50px';
   alertContainer.style.fontSize = '30px';
   alertContainer.style.textAlign = 'center';
   alertContainer.style.backgroundColor = 'white';
-  alertContainer.style.border = 'red';
-
+  alertContainer.style.border = '5px solid #ff6d51';
+  alertContainer.style.borderRadius = '8px';
   alertContainer.textContent = message;
   document.body.append(alertContainer);
 };
