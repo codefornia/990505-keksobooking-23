@@ -4,6 +4,8 @@ import {resetMap, mapCanvas, generatePins, DEFAULT_LOCATION, MAP_ZOOM} from './m
 import {loadData} from './api.js';
 
 const SIMILAR_APARTMENTS_COUNT = 10;
+const LOW_PRICE_LIMIT = 10000;
+const MIDDLE_PRICE_LIMIT = 10000;
 
 resetButton.addEventListener('click', () => {
   resetForm();
@@ -17,16 +19,16 @@ mapCanvas.addEventListener('load', () => {
   enableAdForm();
   loadData((serverData) => {
     enableFilter();
-    for (let i = 0; i < serverData.length; i++) {
+    serverData.forEach((serverDataItem)=> {
       let priceRange = 'low';
-      if (serverData[i].offer.price > 10000) {
+      if (serverDataItem.offer.price > LOW_PRICE_LIMIT) {
         priceRange = 'middle';
       }
-      if (serverData[i].offer.price > 50000) {
+      if (serverDataItem.offer.price > MIDDLE_PRICE_LIMIT) {
         priceRange = 'high';
       }
-      serverData[i].offer.priceRange = priceRange;
-    }
+      serverDataItem.offer.priceRange = priceRange;
+    });
     window.PINS_DATA = serverData;
     generatePins(serverData.slice(0, SIMILAR_APARTMENTS_COUNT));
   });
