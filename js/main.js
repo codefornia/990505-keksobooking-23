@@ -5,7 +5,7 @@ import {loadData} from './api.js';
 
 const SIMILAR_APARTMENTS_COUNT = 10;
 const LOW_PRICE_LIMIT = 10000;
-const MIDDLE_PRICE_LIMIT = 10000;
+const MIDDLE_PRICE_LIMIT = 50000;
 
 resetButton.addEventListener('click', () => {
   resetForm();
