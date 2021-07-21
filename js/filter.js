@@ -31,7 +31,9 @@ const enableFilter = () => {
   });
 };
 
-const filterBase = (data, key, filter) => data.filter((item) => item.offer[key] === filter.value);
+const filterBase = (data, key, filter) => data.filter(
+  (item) => Number.isInteger(item.offer[key]) ? item.offer[key] === parseInt(filter.value, 10) : item.offer[key] === filter.value,
+);
 
 const filterFeatures = (data, feature, filter) => {
   if (!filter.checked) {
