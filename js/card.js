@@ -69,4 +69,5 @@ const getDataCardsElements = (dataCards) => dataCards.map(({author, offer}) => {
   author.avatar ? popupAvatar.src = author.avatar : popupAvatar.remove();
   return dataElement;
 });
+
 export {map, getDataCardsElements};

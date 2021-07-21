@@ -69,6 +69,7 @@ const createPin = (point, index, data) => {
       icon: pinIcon,
     },
   );
+
   pinMarker
     .addTo(markerGroup)
     .bindPopup(
@@ -81,11 +82,11 @@ const createPin = (point, index, data) => {
 
 const generatePins = (data) => {
   const dataCardsElements = getDataCardsElements(data);
+  markerGroup.clearLayers();
   data.forEach((element, index) => {
     createPin(element, index, dataCardsElements);
   });
 };
-
 
 const resetMap = () => {
   mainPinMarker.setLatLng(DEFAULT_LOCATION);

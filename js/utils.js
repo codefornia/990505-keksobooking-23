@@ -40,4 +40,12 @@ const getRandomNumberInt = (firstNumber, secondNumber) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export {getRandomNumberFloat, getRandomNumberInt};
+const debounce = (cb, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => cb.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomNumberFloat, getRandomNumberInt, debounce};

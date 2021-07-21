@@ -1,5 +1,7 @@
 import {generatePins} from './map.js';
+import {debounce} from './utils.js';
 
+const TIMEOUT_DELAY = 500;
 const mapFilter = document.querySelector('.map__filters');
 const filterItems = mapFilter.querySelectorAll('select');
 
@@ -29,23 +31,33 @@ const enableFilter = () => {
   });
 };
 
-const filterBase = (data, key, filter) => {
-  return data.filter(item => item[key] === filter.value);
-};
+const filterBase = (data, key, filter) => data.filter((item) => item.offer[key] === filter.value);
 
 const filterFeatures = (data, feature, filter) => {
   if (!filter.checked) {
     return data;
   }
-  return data.filter(item => item.features.includes(feature));
+  return data.filter((item) => item.offer.features ? item.offer.features.includes(feature) : false);
 };
 
-const filterData = (data) => {
-  let newData = data;
-  newData = filterBase(newData, typeFilterElement.name, typeFilterElement);
-  newData = filterBase(newData, priceFilterElement.name, priceFilterElement);
-  newData = filterBase(newData, roomsFilterElement.name, roomsFilterElement);
-  newData = filterBase(newData, guestsFilterElement.name, guestsFilterElement);
+const filterData = () => {
+  let newData = window.PINS_DATA;
+
+  if (typeFilterElement.value !== 'any') {
+    newData = filterBase(newData, 'type', typeFilterElement);
+  }
+
+  if (priceFilterElement.value !== 'any') {
+    newData = filterBase(newData, 'priceRange', priceFilterElement);
+  }
+
+  if (roomsFilterElement.value !== 'any') {
+    newData = filterBase(newData, 'rooms', roomsFilterElement);
+  }
+
+  if (guestsFilterElement.value !== 'any') {
+    newData = filterBase(newData, 'guests', guestsFilterElement);
+  }
 
   newData = filterFeatures(newData, wifiFilterElement.value, wifiFilterElement);
   newData = filterFeatures(newData, dishwasherFilterElement.value, dishwasherFilterElement);
@@ -57,6 +69,6 @@ const filterData = (data) => {
   generatePins(newData.slice(0, 10));
 };
 
-filterItems.addEventListener ('change', filterData);
+mapFilter.addEventListener('change', debounce(filterData, TIMEOUT_DELAY));
 
 export {disableFilter, enableFilter};
