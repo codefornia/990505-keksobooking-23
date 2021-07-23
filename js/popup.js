@@ -18,17 +18,17 @@ const closeErrorPopup = () => {
   }
 };
 
-const handleDocumentClick = () => {
+const popupClickHandler = () => {
   closeSuccessPopup();
   closeErrorPopup();
-  document.removeEventListener('click', handleDocumentClick);
+  document.removeEventListener('click', popupClickHandler);
 };
 
-const handleDocumentKeydown = (evt) => {
+const popupClickKeydown = (evt) => {
   if (evt.key === 'Escape') {
     closeSuccessPopup();
     closeErrorPopup();
-    document.removeEventListener('keydown', handleDocumentKeydown);
+    document.removeEventListener('keydown', popupClickKeydown);
   }
 };
 
@@ -37,15 +37,15 @@ const showSuccessPopup = () => {
   document.body.appendChild(successPopup);
   resetMap();
   resetForm();
-  document.addEventListener('click', handleDocumentClick);
-  document.addEventListener('keydown', handleDocumentKeydown);
+  document.addEventListener('click', popupClickHandler);
+  document.addEventListener('keydown', popupClickKeydown);
 };
 
 const showErrorPopup = () => {
   const errorPopup = errorPopupTemplate.cloneNode(true);
   document.body.appendChild(errorPopup);
-  document.addEventListener('click', handleDocumentClick);
-  document.addEventListener('keydown', handleDocumentKeydown);
+  document.addEventListener('click', popupClickHandler);
+  document.addEventListener('keydown', popupClickKeydown);
 };
 
 const showAlert = (message) => {

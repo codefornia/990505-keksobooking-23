@@ -1,5 +1,5 @@
 import {generatePins} from './map.js';
-import {debounce} from './utils.js';
+import {removeDebounce} from './utils.js';
 
 const TIMEOUT_DELAY = 500;
 const mapFilter = document.querySelector('.map__filters');
@@ -71,6 +71,6 @@ const filterData = () => {
   generatePins(newData.slice(0, 10));
 };
 
-mapFilter.addEventListener('change', debounce(filterData, TIMEOUT_DELAY));
+mapFilter.addEventListener('change', removeDebounce(filterData, TIMEOUT_DELAY));
 
 export {disableFilter, enableFilter};

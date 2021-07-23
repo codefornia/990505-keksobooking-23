@@ -10,7 +10,7 @@ const loadData = (cb) => {
     .catch(() => showAlert('Загрузка данных на карте сломана, но вы можете отправить форму! Спасибо за понимание!'));
 };
 
-const uploadData = (body) => {
+const loadServerData = (body) => {
   fetch(URL_TO_SEND,
     {
       method: 'POST',
@@ -26,4 +26,4 @@ const uploadData = (body) => {
     .catch(showErrorPopup);
 };
 
-export {loadData, uploadData};
+export {loadData, loadServerData};

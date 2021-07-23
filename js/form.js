@@ -1,5 +1,7 @@
-import {uploadData} from './api.js';
+import {loadServerData} from './api.js';
 
+const DEFAULT_AVATAR = 'img/muffin-grey.svg';
+const ACCEPT_TYPES = ['jpg', 'jpeg', 'png', 'gif'];
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
 const MAX_PRICE = 1000000;
@@ -20,6 +22,7 @@ const NUMBER_OF_GUESTS = {
   3: [1, 2, 3],
   100: [0],
 };
+
 const adForm = document.querySelector('.ad-form');
 const resetButton = adForm.querySelector('.ad-form__reset');
 const fieldsetBlocks = adForm.querySelectorAll('fieldset');
@@ -31,7 +34,12 @@ const capacity = adForm.querySelector('#capacity');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const formAddress = adForm.querySelector('#address');
-
+const avatarChooser = document.querySelector('.ad-form__field input[type=file]');
+const headerPhotoContainer = document.querySelector('.ad-form-header__preview');
+const avatarPreview = headerPhotoContainer.querySelector('img');
+const apartmentImgChooser = document.querySelector('.ad-form__upload input[type=file]');
+const apartmentImgContainer = document.querySelector('.ad-form__photo');
+const addressDefault = `${DEFAULT_LOCATION.lat.toFixed(5)}, ${DEFAULT_LOCATION.lng.toFixed(5)}`;
 const disableAdForm = () => {
   adForm.classList.add('ad-form--disabled');
   fieldsetBlocks.forEach((fieldsetBlock) => {
@@ -108,20 +116,53 @@ timeIn.addEventListener('input', (evt) => {
 timeOut.addEventListener('input', (evt) => {
   timeIn.value = evt.target.value;
 });
-
-
-formAddress.placeholder = `${DEFAULT_LOCATION.lat.toFixed(5)}, ${DEFAULT_LOCATION.lng.toFixed(5)}`;
-
+formAddress.placeholder = addressDefault;
+formAddress.value = addressDefault;
+const resetAddress = () => formAddress.value = addressDefault;
+const resetAvatar = () => avatarPreview.src = DEFAULT_AVATAR;
+const resetApartmentImg = () => apartmentImgContainer.remove();
 const resetForm = () => {
   adForm.reset();
+  resetAvatar();
+  resetApartmentImg();
+  resetAddress();
 };
 
 adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   if (checkCapacity()) {
     const formData = new FormData(evt.target);
-    uploadData(formData);
+    loadServerData(formData);
   }
+});
+
+const loadPhoto = (fileChooser, previewWrapper) => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = ACCEPT_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      previewWrapper.src = reader.result;
+    });
+    reader.readAsDataURL(file);
+  }
+};
+
+avatarChooser.addEventListener('change', () => {
+  loadPhoto(avatarChooser, avatarPreview);
+});
+
+apartmentImgChooser.addEventListener('change', () => {
+  const photoElement = document.createElement('img');
+  photoElement.style.width = '100px';
+  photoElement.style.height = '100px';
+  photoElement.style.objectFit = 'cover';
+  apartmentImgContainer.appendChild(photoElement);
+
+  loadPhoto(apartmentImgChooser, photoElement);
 });
 
 export {disableAdForm, enableAdForm, resetForm, resetButton};

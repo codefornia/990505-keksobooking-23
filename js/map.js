@@ -5,31 +5,30 @@ const DEFAULT_LOCATION = {
   lng: 139.7500,
 };
 const MAP_ZOOM = 13;
-const MainPin = {
-  SIZE: [52, 52],
-  ANCHOR: [26, 52],
-  ICON: './img/main-pin.svg',
-};
-const Pin = {
-  SIZE: [40, 40],
-  ANCHOR: [20, 40],
-  ICON: './img/pin.svg',
-};
-const formAddress = document.querySelector('#address');
 
+const PIN_ICON_URL = 'img/pin.svg';
+const PIN_ICON_WIDTH = 40;
+const PIN_ICON_HEIGHT = 40;
+const MAIN_PIN_ICON_URL = 'img/main-pin.svg';
+const MAIN_PIN_ICON_WIDTH = 52;
+const MAIN_PIN_ICON_HEIGHT = 52;
+const TILE_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const TILE_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+const formAddress = document.querySelector('#address');
 const mapCanvas = L.map('map-canvas');
 
 L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  TILE_URL,
   {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution: TILE_ATTRIBUTION,
   },
 ).addTo(mapCanvas);
 
 const mainPinIcon = L.icon({
-  iconUrl: MainPin.ICON,
-  iconSize: MainPin.SIZE,
-  iconAnchor: MainPin.ANCHOR,
+  iconUrl: MAIN_PIN_ICON_URL,
+  iconSize: [MAIN_PIN_ICON_WIDTH, MAIN_PIN_ICON_HEIGHT],
+  iconAnchor: [MAIN_PIN_ICON_URL/2, MAIN_PIN_ICON_URL],
 });
 
 const mainPinMarker = L.marker(
@@ -56,9 +55,9 @@ const markerGroup = L.layerGroup().addTo(mapCanvas);
 const createPin = (point, index, data) => {
   const {lat, lng} = point.location;
   const pinIcon = L.icon({
-    iconUrl: Pin.ICON,
-    iconSize: Pin.SIZE,
-    iconAnchor: Pin.ANCHOR,
+    iconUrl: PIN_ICON_URL,
+    iconSize: [PIN_ICON_WIDTH, PIN_ICON_HEIGHT],
+    iconAnchor: [PIN_ICON_URL/2, PIN_ICON_URL],
   });
   const pinMarker = L.marker(
     {
