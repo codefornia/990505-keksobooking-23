@@ -5,7 +5,6 @@ const DEFAULT_LOCATION = {
   lng: 139.7500,
 };
 const MAP_ZOOM = 13;
-
 const PIN_ICON_URL = 'img/pin.svg';
 const PIN_ICON_WIDTH = 40;
 const PIN_ICON_HEIGHT = 40;

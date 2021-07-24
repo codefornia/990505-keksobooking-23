@@ -120,7 +120,7 @@ formAddress.placeholder = addressDefault;
 formAddress.value = addressDefault;
 const resetAddress = () => formAddress.value = addressDefault;
 const resetAvatar = () => avatarPreview.src = DEFAULT_AVATAR;
-const resetApartmentImg = () => apartmentImgContainer.remove();
+const resetApartmentImg = () => apartmentImgContainer.innerHTML = '';
 const resetForm = () => {
   adForm.reset();
   resetAvatar();
